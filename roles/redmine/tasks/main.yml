@@ -68,3 +68,4 @@
 
 - include: settings.yml
 - include: themes.yml
+- include: plugins.yml

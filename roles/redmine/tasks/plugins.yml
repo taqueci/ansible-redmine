@@ -1,0 +1,49 @@
+- name: install Redmine WYSIWYG Editor plugin
+  become: yes
+  git:
+    repo=https://github.com/taqueci/redmine_wysiwyg_editor.git
+    dest={{ redmine_dir }}/plugins/redmine_wysiwyg_editor
+    version=0.10.0
+
+- name: install Redmine Mail From plugin
+  become: yes
+  git:
+    repo=https://github.com/taqueci/redmine_mail_from.git
+    dest={{ redmine_dir }}/plugins/redmine_mail_from
+    version=2.0.0
+
+- name: install Redmine Share plugin
+  become: yes
+  git:
+    repo=https://github.com/taqueci/redmine_share.git
+    dest={{ redmine_dir }}/plugins/redmine_share
+    version=1.2.0
+
+- name: install Redmine Local Avatars plugin
+  become: yes
+  git:
+    repo=https://github.com/taqueci/redmine_local_avatars.git
+    dest={{ redmine_dir }}/plugins/redmine_local_avatars
+    version=1.0.5.1.0
+
+- name: install Gems
+  become: yes
+  command:
+    bundle install
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+
+- name: migrate database
+  become: yes
+  command:
+    bundle exec rake redmine:plugins:migrate
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+
+- name: restart Redmine
+  become: yes
+  service: name=httpd state=restarted
