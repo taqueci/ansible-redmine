@@ -1,0 +1,55 @@
+- name: load default data
+  become: yes
+  command:
+    bundle exec rake redmine:load_default_data
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+    REDMINE_LANG: ja
+  when:
+    result_database_yml is changed
+
+- name: set default language
+  become: yes
+  command:
+    bundle exec rails r 'Setting["default_language"]="ja"'
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
+
+- name: set display name format
+  become: yes
+  command:
+    bundle exec rails r 'Setting["user_format"]=:lastname_firstname'
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
+
+- name: set repository encodings
+  become: yes
+  command:
+    bundle exec rails r 'Setting["repositories_encodings"]="UTF-8,CP932,EUC-JP"'
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
+
+- name: enable thumbnails
+  become: yes
+  command:
+    bundle exec rails r 'Setting["thumbnails_enabled"]="1"'
+    chdir={{ redmine_dir }}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
