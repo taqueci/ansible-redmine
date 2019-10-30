@@ -16,6 +16,9 @@ redmine_dir_group: apache
 # Redmineで使用する日本語フォントファイル
 redmine_font_path: /usr/share/fonts/truetype/takao-gothic/TakaoPGothic.ttf
 
+# Redmine language
+redmine_lang: en
+
 # pg_hba.confのパス
 pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
 

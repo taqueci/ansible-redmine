@@ -6,18 +6,7 @@
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
-    REDMINE_LANG: ja
-  when:
-    result_database_yml is changed
-
-- name: set default language
-  become: yes
-  command:
-    bundle exec rails r 'Setting["default_language"]="ja"'
-    chdir={{ redmine_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
+    REDMINE_LANG: "{{ redmine_lang }}"
   when:
     result_database_yml is changed
 
