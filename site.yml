@@ -1,4 +1,4 @@
-- hosts: redmine-servers
+- hosts: redmine_servers
 
   roles:
     - system
