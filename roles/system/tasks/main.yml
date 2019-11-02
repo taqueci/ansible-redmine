@@ -36,7 +36,11 @@
 
 - name: enable extra yum repositories
   become: yes
-  yum: name='centos-release-scl,epel-release'
+  yum:
+    name:
+      - centos-release-scl
+      - epel-release
+    state: present
 
 - name: 開発ツールのインストール
   become: yes

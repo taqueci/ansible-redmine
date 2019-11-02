@@ -66,4 +66,6 @@
 
 - name: restart Redmine
   become: yes
-  service: name=httpd state=restarted
+  service:
+    name: httpd
+    state: restarted

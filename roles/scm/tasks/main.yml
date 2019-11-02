@@ -2,22 +2,22 @@
   become: yes
   yum:
     name:
-     - mod_dav_svn
-     - mod_perl
-     - perl-DBI
-     - perl-DBD-Pg
-     - perl-Digest-SHA
+      - mod_dav_svn
+      - mod_perl
+      - perl-DBI
+      - perl-DBD-Pg
+      - perl-Digest-SHA
     state: present
 
 - name: copy perl-Authen-Simple-LDAP
   copy:
     src: perl-Authen-Simple-LDAP-0.3-1.el7.noarch.rpm
-    dest: "/tmp"
+    dest: /tmp
 
 - name: install perl-Authen-Simple-LDAP
   become: yes
   yum:
-    name: "/tmp/perl-Authen-Simple-LDAP-0.3-1.el7.noarch.rpm"
+    name: /tmp/perl-Authen-Simple-LDAP-0.3-1.el7.noarch.rpm
     state: present
 
 - name: make directory for Redmine.pm

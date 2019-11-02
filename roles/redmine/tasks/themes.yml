@@ -1,8 +1,8 @@
 - name: download theme PurpleMine2
   become: yes
   git:
-    repo=https://github.com/taqueci/PurpleMine2.git
-    dest={{ redmine_dir }}/public/themes/PurpleMine2
+    repo: 'https://github.com/taqueci/PurpleMine2.git'
+    dest: "{{ redmine_dir }}/public/themes/PurpleMine2"
 
 - name: set theme
   become: yes
