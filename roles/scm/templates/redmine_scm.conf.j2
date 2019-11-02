@@ -1,6 +1,6 @@
 PerlLoadModule Apache::Authn::Redmine
 
-<Location /svn>
+<Location {{ scm_svn_url_root }}>
   PerlAuthenHandler Apache::Authn::Redmine::authen_handler
 
   DAV svn
@@ -20,9 +20,9 @@ PerlLoadModule Apache::Authn::Redmine
   Require valid-user
 </Location>
 
-ScriptAlias /git /usr/libexec/git-core/git-http-backend
+ScriptAlias {{ scm_git_url_root }} /usr/libexec/git-core/git-http-backend
 
-<Location /git>
+<Location {{ scm_git_url_root }}>
   SetEnv GIT_PROJECT_ROOT {{ scm_git_repos_path }}
   SetEnv GIT_HTTP_EXPORT_ALL
   SetEnv REMOTE_USER $REDIRECT_REMOTE_USER
