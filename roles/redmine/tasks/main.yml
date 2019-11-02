@@ -63,3 +63,7 @@
 - include: settings.yml
 - include: themes.yml
 - include: plugins.yml
+
+- name: restart Redmine
+  become: yes
+  service: name=httpd state=restarted
