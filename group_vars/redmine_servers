@@ -22,4 +22,8 @@ redmine_lang: en
 # pg_hba.confのパス
 pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
 
+# SCM
+scm_svn_repos_path: /var/lib/svn/repos
+scm_git_repos_path: /var/lib/git/repos
+
 work_dir: /tmp/redmine-setup
