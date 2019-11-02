@@ -15,7 +15,7 @@ Ansibleを使ってRedmineを自動インストールするためのプレイブ
 
 ## システム構成
 
-* Redmine 3.4
+* Redmine 4.0.5
 * CentOS 7.7
 * PostgreSQL
 * Apache
@@ -36,7 +36,7 @@ yum install -y ansible git
 ### playbookのダウンロード
 
 ```
-git clone https://github.com/farend/redmine-centos-ansible.git
+git clone https://github.com/taqueci/redmine-centos-ansible.git
 ```
 
 ### PostgreSQLに設定するパスワードの変更

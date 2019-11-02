@@ -6,6 +6,7 @@
     - ruby
     - redmine
     - apache
+    - scm
 
   post_tasks:
     - name: 完了

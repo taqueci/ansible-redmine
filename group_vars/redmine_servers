@@ -19,14 +19,18 @@ redmine_font_path: /usr/share/fonts/truetype/takao-gothic/TakaoPGothic.ttf
 # Redmine language
 redmine_lang: en
 
+# Redmine relative URL root
+redmine_url_root: /redmine
+
 # pg_hba.confのパス
 pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
 
-# ダウンロードするRubyのソースコード
-ruby_url_dir: https://cache.ruby-lang.org/pub/ruby/2.4
-ruby_archive_version: ruby-2.4.1
-ruby_archive_ext: tar.bz2
-ruby_archive_name: "{{ ruby_archive_version }}.{{ ruby_archive_ext }}"
+# SCM
+scm_svn_repos_path: /var/lib/svn/repos
+scm_git_repos_path: /var/lib/git/repos
 
-ruby_file_name: /usr/local/bin/ruby
+# SCM relative URL root
+scm_svn_url_root: /svn
+scm_git_url_root: /git
+
 work_dir: /tmp/redmine-setup

@@ -8,7 +8,7 @@
 
 - name: Passengerがインストールされているか確認
   command:
-    test -f /usr/local/bin/passenger-install-apache2-module
+    test -f /opt/rh/rh-ruby26/root/usr/local/bin/passenger-install-apache2-module
   register:
     result
   failed_when: result.rc not in [0, 1]
@@ -19,23 +19,17 @@
   gem:
     name=passenger
     user_install=no
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
   when: result.rc == 1
 
 - name: PassengerのApache用モジュールのインストール
   become: yes
   command:
     passenger-install-apache2-module --auto
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
   when: result.rc == 1
 
 - name: PassengerのApache用モジュールの設定を取得
   command:
     passenger-install-apache2-module --snippet
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
   register:
     passenger_snippet_vars
   changed_when: false

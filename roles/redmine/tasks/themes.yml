@@ -1,8 +1,8 @@
 - name: download theme PurpleMine2
   become: yes
   git:
-    repo=https://github.com/taqueci/PurpleMine2.git
-    dest={{ redmine_dir }}/public/themes/PurpleMine2
+    repo: 'https://github.com/taqueci/PurpleMine2.git'
+    dest: "{{ redmine_dir }}/public/themes/PurpleMine2"
 
 - name: set theme
   become: yes
@@ -10,7 +10,6 @@
     bundle exec rails r 'Setting["ui_theme"]="PurpleMine2"'
     chdir={{ redmine_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
   when:
     result_database_yml is changed

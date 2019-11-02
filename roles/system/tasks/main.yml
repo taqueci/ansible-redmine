@@ -34,6 +34,14 @@
   command: firewall-cmd --reload
   when: firewall_state.rc == 0
 
+- name: enable extra yum repositories
+  become: yes
+  yum:
+    name:
+      - centos-release-scl
+      - epel-release
+    state: present
+
 - name: 開発ツールのインストール
   become: yes
   yum: name='@Development Tools'
