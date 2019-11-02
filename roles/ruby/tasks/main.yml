@@ -1,56 +1,21 @@
-- name: Rubyがインストールされているか確認
-  command:
-    test -f {{ ruby_file_name }}
-  register:
-    ruby_test_vars
-  failed_when: ruby_test_vars.rc not in [0, 1]
-  changed_when: false
-
-- name: Rubyがダウンロード済みか確認
-  command:
-    test -f {{ work_dir }}/{{ ruby_archive_version }}
-  register:
-    ruby_src_test_vars
-  failed_when: ruby_test_vars.rc not in [0, 1]
-  changed_when: false
-
-- name: Rubyのソースコードのダウンロード
-  get_url:
-    url={{ ruby_url_dir }}/{{ ruby_archive_name }}
-    dest={{ work_dir }}
-  when: ruby_test_vars.rc == 1 and ruby_src_test_vars.rc == 1
-
-- name: Rubyのソースコードを展開
-  unarchive:
-    src={{ work_dir }}/{{ ruby_archive_name }}
-    dest={{ work_dir }}
-    copy=no
-  when: ruby_test_vars.rc == 1 and ruby_src_test_vars.rc == 1
-
-- name: Rubyのビルド1 (configure)
-  command:
-    ./configure --disable-install-doc
-    chdir={{ work_dir }}/{{ ruby_archive_version }}
-  when: ruby_test_vars.rc == 1
-
-- name: Rubyのビルド2 (make)
-  command:
-    make
-    chdir={{ work_dir }}/{{ ruby_archive_version }}
-  when: ruby_test_vars.rc == 1
-
-- name: Rubyのインストール
+- name: install Ruby
   become: yes
-  command:
-    make install
-    chdir={{ work_dir }}/{{ ruby_archive_version }}
-  when: ruby_test_vars.rc == 1
+  yum: name='rh-ruby26,rh-ruby26-ruby-devel,rh-ruby26-rubygem-bundler'
 
-- name: bundlerのインストール
+- name: copy startup script
   become: yes
-  gem:
-    name=bundler
-    user_install=no
-    version=1.17.3
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+  copy:
+    src: rh-ruby.sh
+    dest: /etc/profile.d/rh-ruby.sh
+    mode: 0644
+
+- name: enable Ruby
+  become: yes
+  shell: source /etc/profile.d/rh-ruby.sh
+
+- name: make symbolic link of libruby.so in order to avoid error
+  become: yes
+  file:
+    src: /opt/rh/rh-ruby26/root/usr/lib64/libruby.so.2.6
+    dest: /usr/lib64/libruby.so.2.6
+    state: link

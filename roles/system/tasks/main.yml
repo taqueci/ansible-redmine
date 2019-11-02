@@ -34,6 +34,10 @@
   command: firewall-cmd --reload
   when: firewall_state.rc == 0
 
+- name: enable SCL repository
+  become: yes
+  yum: name='centos-release-scl'
+
 - name: 開発ツールのインストール
   become: yes
   yum: name='@Development Tools'

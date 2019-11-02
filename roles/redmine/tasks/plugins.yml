@@ -32,7 +32,6 @@
     bundle install
     chdir={{ redmine_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
 
 - name: migrate database
@@ -41,7 +40,6 @@
     bundle exec rake redmine:plugins:migrate
     chdir={{ redmine_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
 
 - name: restart Redmine
