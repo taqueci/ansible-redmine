@@ -7,7 +7,7 @@ db_passwd_redmine: Must_be_changed!
 redmine_svn_url: http://svn.redmine.org/redmine/tags/4.0.5
 
 # Redmineのデプロイ先ディレクトリ
-redmine_dir: /var/lib/redmine
+redmine_dir: /opt/redmine
 
 # Redmineのデプロイ先ディレクトリのオーナー:グループ
 redmine_dir_owner: apache
