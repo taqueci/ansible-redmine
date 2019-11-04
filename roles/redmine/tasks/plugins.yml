@@ -40,6 +40,13 @@
     dest: "{{ redmine_dir }}/plugins/view_customize"
     version: v2.5.0
 
+- name: install Redmine scm-creator plugin
+  become: yes
+  git:
+    repo: 'https://github.com/taqueci/scm-creator.git'
+    dest: "{{ redmine_dir }}/plugins/redmine_scm"
+    version: 0.5.1.1.0
+
 - name: install Gems
   become: yes
   command:

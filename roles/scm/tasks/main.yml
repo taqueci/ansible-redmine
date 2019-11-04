@@ -59,6 +59,13 @@
     dest: /etc/httpd/conf.d/redmine_scm.conf
     mode: '0755'
 
+- name: set scm-creator configuration
+  become: yes
+  template:
+    src: scm.yml.j2
+    dest: "{{ redmine_dir }}/config/scm.yml"
+    mode: '0755'
+
 - name: restart Apache
   become: yes
   service:
