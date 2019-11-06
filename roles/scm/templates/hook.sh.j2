@@ -1,0 +1,10 @@
+#!/bin/bash
+
+repos=$1
+vcs=$2
+proj=$3
+
+dir=$(dirname $(readlink -f $0))
+prog=$dir/hooks/$vcs/{{ item }}
+
+test ! -x $prog || $prog $repos $proj || exit 1
