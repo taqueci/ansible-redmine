@@ -1,21 +1,23 @@
 PerlLoadModule Apache::Authn::Redmine
+PerlLoadModule Authen::Simple::LDAP
 
 <Location {{ scm_svn_url_root }}>
+  PerlAccessHandler Apache::Authn::Redmine::access_handler
   PerlAuthenHandler Apache::Authn::Redmine::authen_handler
 
   DAV svn
 
   SVNParentPath {{ scm_svn_repos_path }}
-  SVNListParentPath on
 
   AuthType Basic
   AuthName "Subversion"
+  AuthUserFile /dev/null
 
   RedmineDSN "DBI:Pg:database=redmine;host=localhost"
   RedmineDbUser "redmine"
   RedmineDbPass "{{ db_passwd_redmine }}"
 
-  AuthUserFile /dev/null
+  RedmineCacheCredsMax 100
 
   Require valid-user
 </Location>
@@ -27,19 +29,18 @@ ScriptAlias {{ scm_git_url_root }} /usr/libexec/git-core/git-http-backend
   SetEnv GIT_HTTP_EXPORT_ALL
   SetEnv REMOTE_USER $REDIRECT_REMOTE_USER
 
-  PerlAccessHandler Apache::Authn::Redmine::access_handler
+  # PerlAccessHandler Apache::Authn::Redmine::access_handler
   PerlAuthenHandler Apache::Authn::Redmine::authen_handler
 
   AuthType Basic
   AuthName "Git"
+  AuthUserFile /dev/null
 
   RedmineDSN "DBI:Pg:database=redmine;host=localhost"
   RedmineDbUser "redmine"
   RedmineDbPass "{{ db_passwd_redmine }}"
 
   RedmineGitSmartHttp yes
-
-  AuthUserFile /dev/null
 
   Require valid-user
 </Location>
