@@ -59,6 +59,46 @@
     dest: /etc/httpd/conf.d/redmine_scm.conf
     mode: '0755'
 
+- name: set scm-creator configuration
+  become: yes
+  template:
+    src: scm.yml.j2
+    dest: "{{ redmine_dir }}/config/scm.yml"
+    mode: '0755'
+
+- name: make directory for scm-creator custom scripts
+  become: yes
+  file:
+    path: /usr/local/libexec/redmine/scm
+    state: directory
+    mode: '0755'
+
+- name: copy scm-creator custom scripts
+  become: yes
+  template:
+    src: hook.sh.j2
+    dest: /usr/local/libexec/redmine/scm/{{ item }}.sh
+    mode: '0755'
+  with_items:
+    - pre-create
+    - post-create
+    - pre-delete
+    - post-delete
+
+- name: copy scm-creator script templates
+  become: yes
+  copy:
+    src: hooks
+    dest: /usr/local/libexec/redmine/scm/
+
+- name: copy post-create script for Git
+  become: yes
+  copy:
+    src: hooks/git/post-create.tmpl
+    dest: /usr/local/libexec/redmine/scm/hooks/git/post-create
+    mode: '0755'
+    force: no
+
 - name: restart Apache
   become: yes
   service:

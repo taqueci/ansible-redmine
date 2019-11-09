@@ -1,0 +1,17 @@
+production:
+  auto_create: true
+  pre_create: /usr/local/libexec/redmine/scm/pre-create.sh
+  post_create: /usr/local/libexec/redmine/scm/post-create.sh
+  pre_delete: /usr/local/libexec/redmine/scm/pre-delete.sh
+  post_delete: /usr/local/libexec/redmine/scm/post-delete.sh
+  svn:
+    path: {{ scm_svn_repos_path }}
+    svnadmin: /usr/bin/svnadmin
+    url: {{ scm_svn_url_root | regex_replace('^/', '') }}
+  git:
+    path: {{ scm_git_repos_path }}
+    git: /usr/bin/git
+    options: --bare
+    url: {{ scm_git_url_root | regex_replace('^/', '') }}
+    update_server_info: true
+    git_ext: true

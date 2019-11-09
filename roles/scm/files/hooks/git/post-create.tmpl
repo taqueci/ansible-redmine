@@ -1,0 +1,12 @@
+#!/bin/bash
+
+repos=$1
+proj=$2
+
+# Creates hook script for HTTP access
+hook=$repos/hooks/post-update
+cat <<'EOF' > $hook
+#!/bin/sh
+exec git update-server-info
+EOF
+chmod 755 $hook
