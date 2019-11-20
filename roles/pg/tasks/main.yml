@@ -7,7 +7,7 @@
   failed_when: result.rc not in [0, 1]
   changed_when: result.rc == 0
 
-- name: pg_hba.confにredmine用設定が存在するか確認
+- name: check Redmine configuration in pg_hba.conf
   become: yes
   command:
     grep redmine {{ pg_hba_conf_path }}
@@ -16,7 +16,7 @@
   failed_when: result_pg_hba.rc not in [0, 1]
   changed_when: false
 
-- name: pg_hba.conf設定変更用パッチを配置
+- name: copy patch for pg_hba.conf
   become: yes
   copy:
     src=pg_hba_conf.patch
@@ -24,21 +24,21 @@
   when:
     result_pg_hba.rc == 1
 
-- name: pg_hba.confにredmine用設定を追加
+- name: add Redmine configuration to pg_hba.conf
   become: yes
   shell:
     patch -tNp0 {{ pg_hba_conf_path }} < {{ work_dir }}/pg_hba_conf.patch
   when:
     result_pg_hba.rc == 1
 
-- name: PostgreSQL起動
+- name: start PostgreSQL
   become: yes
   service:
     name=postgresql
     state=restarted
     enabled=yes
 
-- name: PostgreSQL ユーザー作成
+- name: create PostgreSQL user
   become: yes
   become_user: postgres
   become_method: sudo
@@ -46,7 +46,7 @@
     name=redmine
     password={{ db_passwd_redmine }}
 
-- name: PostgreSQL データベース作成
+- name: create database for Redmine
   become: yes
   become_user: postgres
   become_method: sudo

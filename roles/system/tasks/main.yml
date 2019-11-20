@@ -1,4 +1,4 @@
-- name: SELinuxの状態確認
+- name: check SELinux
   command:
     /usr/sbin/selinuxenabled
   register:
@@ -6,17 +6,17 @@
   changed_when: false
   failed_when: result.rc not in [0, 1]
 
-- name: 起動時にSELinux無効化 (/etc/sysconfig/selinux)
+- name: disable SELinux
   become: yes
   selinux: state=disabled
   when: result.rc == 0
 
-- name: SELinux無効化 (setenforce)
+- name: disable SELinux (setenforce)
   become: yes
   command: setenforce 0
   when: result.rc == 0
 
-- name: firewalldが起動しているか確認
+- name: check firewalld
   become: yes
   shell: firewall-cmd --state
   register: firewall_state
@@ -24,12 +24,12 @@
   changed_when: false
   check_mode: no
 
-- name: firewalldでHTTPを許可
+- name: allow HTTP
   become: yes
   command: firewall-cmd --zone=public --add-service=http --permanent
   when: firewall_state.rc == 0
 
-- name: firewalldのポリシーをリロード
+- name: relaod firewalld policy
   become: yes
   command: firewall-cmd --reload
   when: firewall_state.rc == 0
@@ -42,36 +42,36 @@
       - epel-release
     state: present
 
-- name: 開発ツールのインストール
+- name: install development tools
   become: yes
   yum: name='@Development Tools'
 
-- name: RubyとPassengerのビルドに必要な開発ツールやヘッダファイルのインストール
+- name: install development tools for Ruby and Passenger
   become: yes
   yum:
     name='openssl-devel,readline-devel,zlib-devel,curl-devel,libyaml-devel,libffi-devel'
 
-- name:  PostgreSQLとヘッダファイルのインストール
+- name: install PostgreSQL
   become: yes
   yum:
     name='postgresql-server,postgresql-devel,python-psycopg2'
 
-- name: Apacheとヘッダファイルのインストール
+- name: install Apache
   become: yes
   yum:
     name='httpd,httpd-devel'
 
-- name: ImageMagickとヘッダファイル・日本語フォントのインストール
+- name: install ImageMagick and Japanese fonts
   become: yes
   yum:
     name='ImageMagick,ImageMagick-devel,ipa-pgothic-fonts'
 
-- name: そのほかのツールのインストール
+- name: install tools
   become: yes
   yum:
     name='subversion,git,which'
 
-- name: 作業ディレクトリ作成
+- name: make working directory
   file: path={{ work_dir }}
     state=directory
     mode=0755

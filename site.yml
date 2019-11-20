@@ -9,6 +9,8 @@
     - scm
 
   post_tasks:
-    - name: 完了
+    - name: completed
       debug:
-        msg='インストールが完了しました。 http://{{ ansible_default_ipv4.address }}/redmine/ にアクセスしてください。'
+        msg:
+        - The installation has been completed.
+        - "http://{{ ansible_default_ipv4.address }}{{ redmine_url_root }}"
