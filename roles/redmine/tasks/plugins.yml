@@ -50,7 +50,7 @@
 - name: install Gems
   become: yes
   command:
-    bundle install
+    scl enable rh-ruby26 -- bundle install
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -58,7 +58,7 @@
 - name: migrate database
   become: yes
   command:
-    bundle exec rake redmine:plugins:migrate
+    scl enable rh-ruby26 -- bundle exec rake redmine:plugins:migrate
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
