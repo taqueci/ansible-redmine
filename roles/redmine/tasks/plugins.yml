@@ -47,6 +47,13 @@
     dest: "{{ redmine_dir }}/plugins/redmine_scm"
     version: 0.5.1.1.0
 
+- name: install Redmine Banner plugin
+  become: yes
+  git:
+    repo: 'https://github.com/akiko-pusu/redmine_banner.git'
+    dest: "{{ redmine_dir }}/plugins/redmine_banner"
+    version: 0.2.1
+
 - name: install Gems
   become: yes
   command:
