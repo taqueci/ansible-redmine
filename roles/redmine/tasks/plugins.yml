@@ -54,6 +54,24 @@
     dest: "{{ redmine_dir }}/plugins/redmine_banner"
     version: 0.2.1
 
+- name: install localizable plugin
+  become: yes
+  unarchive:
+    src: 'localizable 0.4.0.tar.gz'
+    dest: "{{ redmine_dir }}/plugins"
+
+- name: install Redmine Checklists plugin
+  become: yes
+  unarchive:
+    src: redmine_checklists-3_1_16-pro.zip
+    dest: "{{ redmine_dir }}/plugins"
+
+- name: install Redmine Agile plugin
+  become: yes
+  unarchive:
+    src: redmine_agile-1_5_0-pro.zip
+    dest: "{{ redmine_dir }}/plugins"
+
 - name: install Gems
   become: yes
   command:
