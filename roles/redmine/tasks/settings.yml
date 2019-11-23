@@ -9,6 +9,26 @@
   when:
     result_database_yml is changed
 
+- name: set protocol
+  become: yes
+  command:
+    scl enable rh-ruby26 -- bundle exec rails r "Setting['protocol']='{{ redmine_protocol }}'"
+    chdir={{ redmine_dir }}
+  environment:
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
+
+- name: set host name
+  become: yes
+  command:
+    scl enable rh-ruby26 -- bundle exec rails r "Setting['host_name']='{{ redmine_host_name }}{{ redmine_url_root }}'"
+    chdir={{ redmine_dir }}
+  environment:
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
+
 - name: set display name format
   become: yes
   command:

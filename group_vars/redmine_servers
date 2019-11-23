@@ -19,6 +19,12 @@ redmine_font_path: /usr/share/fonts/truetype/takao-gothic/TakaoPGothic.ttf
 # Redmine language
 redmine_lang: en
 
+# 'http' or 'https'
+redmine_protocol: https
+
+# HOST or HOST:PORT
+redmine_host_name: example.com
+
 # Redmine relative URL root
 redmine_url_root: /redmine
 

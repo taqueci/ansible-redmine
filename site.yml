@@ -14,3 +14,4 @@
         msg:
         - The installation has been completed.
         - "http://{{ ansible_default_ipv4.address }}{{ redmine_url_root }}"
+        - "{{ redmine_protocol }}://{{ redmine_host_name }}{{ redmine_url_root }}"
