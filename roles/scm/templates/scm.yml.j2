@@ -7,11 +7,11 @@ production:
   svn:
     path: {{ scm_svn_repos_path }}
     svnadmin: /usr/bin/svnadmin
-    url: {{ scm_svn_url_root | regex_replace('^/', '') }}
+    url: {{ redmine_protocol }}://{{ redmine_host_name }}{{scm_svn_url_root}}
   git:
     path: {{ scm_git_repos_path }}
     git: /usr/bin/git
     options: --bare
-    url: {{ scm_git_url_root | regex_replace('^/', '') }}
+    url: {{ redmine_protocol }}://{{ redmine_host_name }}{{scm_git_url_root}}
     update_server_info: true
     git_ext: true

@@ -6,5 +6,6 @@ proj=$3
 
 dir=$(dirname $(readlink -f $0))
 prog=$dir/hooks/$vcs/{{ item }}
+url="{{ redmine_protocol }}://{{ redmine_host_name }}{{ redmine_url_root }}"
 
-test ! -x $prog || $prog $repos $proj || exit 1
+test ! -x $prog || $prog $repos $proj $url || exit 1

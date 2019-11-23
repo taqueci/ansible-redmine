@@ -14,10 +14,6 @@
     dest: /etc/profile.d/rh-ruby.sh
     mode: 0644
 
-- name: enable Ruby
-  become: yes
-  shell: source /etc/profile.d/rh-ruby.sh
-
 - name: make symbolic link of libruby.so in order to avoid error
   become: yes
   file:

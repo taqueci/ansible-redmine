@@ -1,10 +1,10 @@
-- name: Redmineのソースコードをチェックアウト
+- name: checkout Redmine source files
   become: yes
   subversion:
     repo={{ redmine_svn_url }}
     dest={{ redmine_dir }}
 
-- name: database.ymlの作成
+- name: create database.yml
   become: yes
   template:
     src=database.yml
@@ -13,14 +13,14 @@
   register:
     result_database_yml
 
-- name: configuration.ymlの作成
+- name: create configuration.yml
   become: yes
   template:
     src=configuration.yml
     dest={{ redmine_dir }}/config/configuration.yml
     force=no
 
-- name: Gemfile.lockが存在するか確認
+- name: check Gemfile.lock
   command:
     test -f {{ redmine_dir }}/Gemfile.lock
   register:
@@ -28,34 +28,34 @@
   failed_when: result_test_gemfile.rc not in [0, 1]
   changed_when: false
 
-- name: gemsパッケージのインストール
+- name: install Gems packages
   become: yes
   command:
-    bundle install --path vendor/bundle
+    scl enable rh-ruby26 -- bundle install --path vendor/bundle
     chdir={{ redmine_dir }}
   when:
     result_test_gemfile.rc == 1
 
-- name: gemsパッケージのアップデート
+- name: update Gems packages
   become: yes
   command:
-    bundle update
+    scl enable rh-ruby26 -- bundle update
     chdir={{ redmine_dir }}
   when:
     result_test_gemfile.rc == 0
 
-- name: secret tokenの作成
+- name: create secret token
   become: yes
   command:
-    bundle exec rake generate_secret_token
+    scl enable rh-ruby26 -- bundle exec rake generate_secret_token
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
 
-- name: データベースのマイグレーション
+- name: migrate database
   become: yes
   command:
-    bundle exec rake db:migrate
+    scl enable rh-ruby26 -- bundle exec rake db:migrate
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production

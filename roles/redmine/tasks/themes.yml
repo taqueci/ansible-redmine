@@ -7,7 +7,7 @@
 - name: set theme
   become: yes
   command:
-    bundle exec rails r 'Setting["ui_theme"]="PurpleMine2"'
+    scl enable rh-ruby26 -- bundle exec rails r "Setting['ui_theme']='PurpleMine2'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
