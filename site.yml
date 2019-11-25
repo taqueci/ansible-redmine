@@ -1,7 +1,7 @@
-- hosts: redmine_servers
+- hosts: centos
 
   roles:
-    - system
+    - system_centos
     - pg_init
     - pg
     - redmine
