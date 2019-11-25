@@ -1,0 +1,32 @@
+- name: PostgreSQL initdb
+  become: yes
+  command:
+    postgresql-setup initdb
+  register:
+    result
+  failed_when: result.rc not in [0, 1]
+  changed_when: result.rc == 0
+
+- name: check Redmine configuration in pg_hba.conf
+  become: yes
+  command:
+    grep redmine {{ pg_hba_conf_path }}
+  register:
+    result_pg_hba
+  failed_when: result_pg_hba.rc not in [0, 1]
+  changed_when: false
+
+- name: copy patch for pg_hba.conf
+  become: yes
+  copy:
+    src: pg_hba_conf.patch
+    dest: /tmp
+  when:
+    result_pg_hba.rc == 1
+
+- name: add Redmine configuration to pg_hba.conf
+  become: yes
+  shell:
+    patch -tNp0 {{ pg_hba_conf_path }} < /tmp/pg_hba_conf.patch
+  when:
+    result_pg_hba.rc == 1

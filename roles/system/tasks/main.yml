@@ -40,38 +40,104 @@
     name:
       - centos-release-scl
       - epel-release
-    state: present
 
 - name: install development tools
   become: yes
-  yum: name='@Development Tools'
+  yum:
+    name:
+      - '@Development Tools'
 
 - name: install development tools for Ruby and Passenger
   become: yes
   yum:
-    name='openssl-devel,readline-devel,zlib-devel,curl-devel,libyaml-devel,libffi-devel'
+    name:
+      - curl-devel
+      - libffi-devel
+      - libyaml-devel
+      - openssl-devel
+      - readline-devel
+      - zlib-devel
 
 - name: install PostgreSQL
   become: yes
   yum:
-    name='postgresql-server,postgresql-devel,python-psycopg2'
+    name:
+      - postgresql-server
+      - postgresql-devel
+      - python-psycopg2
 
 - name: install Apache
   become: yes
   yum:
-    name='httpd,httpd-devel'
+    name:
+      - httpd
+      - httpd-devel
+
+- name: install Ruby
+  become: yes
+  yum:
+    name:
+      - rh-ruby26
+      - rh-ruby26-ruby-devel
+      - rh-ruby26-rubygem-bundler
+
+- name: copy startup script
+  become: yes
+  copy:
+    src: rh-ruby.sh
+    dest: /etc/profile.d/rh-ruby.sh
+    mode: '0644'
+
+- name: make symbolic link of libruby.so in order to avoid error
+  become: yes
+  file:
+    src: /opt/rh/rh-ruby26/root/usr/lib64/libruby.so.2.6
+    dest: /usr/lib64/libruby.so.2.6
+    state: link
 
 - name: install ImageMagick and Japanese fonts
   become: yes
   yum:
-    name='ImageMagick,ImageMagick-devel,ipa-pgothic-fonts'
+    name:
+      - ImageMagick
+      - ImageMagick-devel
+      - ipa-pgothic-fonts
 
 - name: install tools
   become: yes
   yum:
-    name='subversion,git,which'
+    name:
+      - subversion
+      - git
+      - which
 
-- name: make working directory
-  file: path={{ work_dir }}
-    state=directory
-    mode=0755
+- name: make pseudo commands
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    mode: '0755'
+  with_items:
+    - bundle
+    - gem
+    - passenger-install-apache2-module
+
+- name: install packages for SCM authentication
+  become: yes
+  yum:
+    name:
+      - mod_dav_svn
+      - mod_perl
+      - perl-DBI
+      - perl-DBD-Pg
+      - perl-Digest-SHA
+
+- name: copy perl-Authen-Simple-LDAP
+  copy:
+    src: perl-Authen-Simple-LDAP-0.3-1.el7.noarch.rpm
+    dest: /tmp
+
+- name: install perl-Authen-Simple-LDAP
+  become: yes
+  yum:
+    name: /tmp/perl-Authen-Simple-LDAP-0.3-1.el7.noarch.rpm

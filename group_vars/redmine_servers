@@ -31,6 +31,10 @@ redmine_url_root: /redmine
 # pg_hba.confのパス
 pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
 
+# Apache
+apache_service: httpd
+apache_conf_dir: /etc/httpd/conf.d
+
 # SCM
 scm_svn_repos_path: /var/lib/svn/repos
 scm_git_repos_path: /var/lib/git/repos
@@ -39,4 +43,8 @@ scm_git_repos_path: /var/lib/git/repos
 scm_svn_url_root: /svn
 scm_git_url_root: /git
 
-work_dir: /tmp/redmine-setup
+# Directory path for Redmine.pm
+scm_perl_inc: /usr/lib64/perl5/vendor_perl
+
+# Script for Git smart HTTP
+scm_git_http_backend: /usr/libexec/git-core/git-http-backend

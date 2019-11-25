@@ -2,11 +2,11 @@
 
   roles:
     - system
+    - pg_init
     - pg
-    - ruby
     - redmine
-    - apache
     - scm
+    - apache
 
   post_tasks:
     - name: completed
