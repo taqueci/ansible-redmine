@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec scl enable rh-ruby26 -- bundle "$@"

@@ -1,7 +1,7 @@
 - name: load default data
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rake redmine:load_default_data
+    bundle exec rake redmine:load_default_data
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -12,7 +12,7 @@
 - name: set protocol
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['protocol']='{{ redmine_protocol }}'"
+    bundle exec rails r "Setting['protocol']='{{ redmine_protocol }}'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -22,7 +22,7 @@
 - name: set host name
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['host_name']='{{ redmine_host_name }}{{ redmine_url_root }}'"
+    bundle exec rails r "Setting['host_name']='{{ redmine_host_name }}{{ redmine_url_root }}'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -32,7 +32,7 @@
 - name: set display name format
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['user_format']=:lastname_firstname"
+    bundle exec rails r "Setting['user_format']=:lastname_firstname"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -42,7 +42,7 @@
 - name: set authentication required
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['login_required']='1'"
+    bundle exec rails r "Setting['login_required']='1'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -52,7 +52,7 @@
 - name: disable unsubscription
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['unsubscribe']='0'"
+    bundle exec rails r "Setting['unsubscribe']='0'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -62,7 +62,7 @@
 - name: set notification conditions
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['notified_events']='---\n- issue_added\n- issue_updated\n- news_added\n- news_comment_added'"
+    bundle exec rails r "Setting['notified_events']='---\n- issue_added\n- issue_updated\n- news_added\n- news_comment_added'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -72,7 +72,7 @@
 - name: set repository encodings
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['repositories_encodings']='UTF-8,CP932,EUC-JP'"
+    bundle exec rails r "Setting['repositories_encodings']='UTF-8,CP932,EUC-JP'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -82,7 +82,7 @@
 - name: set commit reference keywords
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['commit_ref_keywords']='*'"
+    bundle exec rails r "Setting['commit_ref_keywords']='*'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -92,7 +92,7 @@
 - name: enable thumbnails
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['thumbnails_enabled']='1'"
+    bundle exec rails r "Setting['thumbnails_enabled']='1'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production

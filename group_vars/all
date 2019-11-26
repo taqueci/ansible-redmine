@@ -1,19 +1,13 @@
-# ----------------------------------------------------------------------
-# データベースの redmine ユーザーのパスワード (変更推奨)
+# Database password (SHOULD BE CHANGED)
 db_passwd_redmine: Must_be_changed!
-# ----------------------------------------------------------------------
 
-# Redmineのチェックアウト元URL
+# Redmine source files
 redmine_svn_url: http://svn.redmine.org/redmine/tags/4.0.5
 
-# Redmineのデプロイ先ディレクトリ
+# Redmine directory
 redmine_dir: /opt/redmine
 
-# Redmineのデプロイ先ディレクトリのオーナー:グループ
-redmine_dir_owner: apache
-redmine_dir_group: apache
-
-# Redmineで使用する日本語フォントファイル
+# Japanese fonts file
 redmine_font_path: /usr/share/fonts/truetype/takao-gothic/TakaoPGothic.ttf
 
 # Redmine language
@@ -28,7 +22,7 @@ redmine_host_name: example.com
 # Redmine relative URL root
 redmine_url_root: /redmine
 
-# pg_hba.confのパス
+# PostgreSQL configuration file
 pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
 
 # SCM
@@ -38,5 +32,3 @@ scm_git_repos_path: /var/lib/git/repos
 # SCM relative URL root
 scm_svn_url_root: /svn
 scm_git_url_root: /git
-
-work_dir: /tmp/redmine-setup
