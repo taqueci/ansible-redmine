@@ -1,0 +1,76 @@
+- name: update list of available packages
+  become: yes
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: install development tools
+  become: yes
+  apt:
+    name:
+      - build-essential
+
+- name: install development tools for Ruby and Passenger
+  become: yes
+  apt:
+    name:
+      - zlib1g-dev
+      - libssl-dev
+      - libreadline-dev
+      - libyaml-dev
+      - libcurl4-openssl-dev
+      - libffi-dev
+      - libwbxml2-dev
+      - libxslt1-dev
+      - libiconv-hook-dev
+
+- name: install PostgreSQL
+  become: yes
+  apt:
+    name:
+      - postgresql
+      - postgresql-server-dev-10
+      - python3-psycopg2
+
+- name: install Apache
+  become: yes
+  apt:
+    name:
+      - apache2
+      - apache2-dev
+      - libapr1-dev
+      - libaprutil1-dev
+
+- name: install Ruby
+  become: yes
+  apt:
+    name:
+      - ruby
+      - ruby-dev
+      - bundler
+
+- name: install ImageMagick and Japanese fonts
+  become: yes
+  apt:
+    name:
+      - imagemagick
+      - libmagick++-dev
+      - fonts-takao-pgothic
+
+- name: install tools
+  become: yes
+  apt:
+    name:
+      - subversion
+      - git
+
+- name: install packages for SCM authentication
+  become: yes
+  apt:
+    name:
+      - libapache2-mod-svn
+      - libapache2-mod-perl2
+      - libdbi-perl
+      - libdbd-pg-perl
+      - libdigest-sha-perl
+      - libauthen-simple-ldap-perl

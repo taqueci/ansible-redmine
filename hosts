@@ -1,5 +1,8 @@
 [redmine_servers:children]
 centos
+ubuntu
 
 [centos]
 localhost ansible_connection=local
+
+[ubuntu]
