@@ -1,2 +1,5 @@
-[redmine_servers]
+[redmine_servers:children]
+ubuntu
+
+[ubuntu]
 localhost ansible_connection=local

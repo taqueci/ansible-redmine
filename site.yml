@@ -1,8 +1,7 @@
-- hosts: redmine_servers
+- hosts: ubuntu
 
   roles:
-    - system
-    - pg_init
+    - system_ubuntu
     - pg
     - redmine
     - scm

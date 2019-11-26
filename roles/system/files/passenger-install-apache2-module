@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec scl enable rh-ruby26 -- passenger-install-apache2-module "$@"
