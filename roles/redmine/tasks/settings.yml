@@ -16,8 +16,6 @@
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
-  when:
-    result_database_yml is changed
 
 - name: set host name
   become: yes
@@ -26,8 +24,6 @@
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
-  when:
-    result_database_yml is changed
 
 - name: set display name format
   become: yes
