@@ -4,5 +4,7 @@ ubuntu
 
 [centos]
 localhost ansible_connection=local
+10.0.0.1 ansible_ssh_user=centos
 
 [ubuntu]
+10.0.0.2 ansible_ssh_user=ubuntu
