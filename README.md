@@ -1,65 +1,46 @@
-# redmine-centos-ansible
+# Ansible playbook for Redmine
 
+Ansible playbook for installing Redmine with plugins on CentOS/Ubuntu.
 
-最小構成でインストールしたCentOSにRedmineを自動インストールするためのAnsibleプレイブックです。
+## Requirements
 
-コマンド5個実行するだけで、あとはしばらく放置すればインストールが完了します。
+CentOS 7.6 or Ubuntu 18.04
 
-
-## 概要
-
-Ansibleを使ってRedmineを自動インストールするためのプレイブックです。以下のwebサイトで紹介されている手順におおむね準拠しています。
-
-[Redmine 3.4をCentOS 7.3にインストールする手順](http://blog.redmine.jp/articles/3_4/install/centos/)
-
-
-## システム構成
+## System
 
 * Redmine 4.0.5
-* CentOS 7.7
 * PostgreSQL
 * Apache
+* Passenger
 
+## Plugins
 
-## Redmineのインストール手順
+* Redmine WYSIWYG Editor plugin
+* Redmine Mail From plugin
+* Redmine Share plugin
+* Redmine Local Avatars plugin
+* Redmine XLSX Format Issue Exporter plugin
+* Redmine View Customize plugin
+* Redmine scm-creator plugin
+* Redmine Banner plugin
 
-インストール直後の CentOS 7.7 に root でログインし以下の操作を行ってください。
+## Installation
 
-
-### Ansibleとgitのインストール
-
+* Copy `hosts.sample` to `hosts` and edit `hosts`
+* Copy `host_vars/localhost.yml.sample` to `host_vars/HOSTNAME.yml`
+and edit the file as many as target hosts
+* Run commend:
 ```
-yum install -y epel-release
-yum install -y ansible git
-```
-
-### playbookのダウンロード
-
-```
-git clone https://github.com/taqueci/redmine-centos-ansible.git
-```
-
-### PostgreSQLに設定するパスワードの変更
-
-ダウンロードしたプレイブック内のファイル `group_vars/redmine_servers` をエディタで開き、 `db_passwd_redmine` を適当な内容に変更してください。これはPostgreSQLのRedmine用ユーザー redmine に設定されるパスワードです。
-
-### playbook実行
-
-下記コマンドを実行してください。Redmineの自動インストールが開始されます。
-
-```
-cd redmine-centos-ansible
 ansible-playbook -i hosts site.yml
 ```
 
-10〜20分ほどでインストールが完了します。webブラウザで `http://サーバIPアドレス/redmine` にアクセスしてください。Redmineの画面が表示されるはずです。
-
-
-## ライセンス
+## License
 
 MIT License
 
+## Author
 
-## 作者
+Takeshi Nakamura
 
-[ファーエンドテクノロジー株式会社](http://www.farend.co.jp/)
+(The original version is written by
+[Far End Technologies Corporation](http://www.farend.co.jp/))
