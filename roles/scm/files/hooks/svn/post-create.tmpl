@@ -14,8 +14,8 @@ tmpdir=$(mktemp -d)
 # Initializes repository
 svn co file://$repos $tmpdir
 svn mkdir $tmpdir/trunk $tmpdir/branches $tmpdir/tags
-svn propset bugtraq:url "$bt_url" $tmpdir/trunk || exit 1
-svn propset bugtraq:logregex "$bt_pat" $tmpdir/trunk || exit 1
+svn propset bugtraq:url "$bt_url" $tmpdir/trunk
+svn propset bugtraq:logregex "$bt_pat" $tmpdir/trunk
 svn commit --username=admin -m 'Initial commit' $tmpdir
 rm -rf $tmpdir
 
