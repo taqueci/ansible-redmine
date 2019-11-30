@@ -25,71 +25,22 @@
   environment:
     RAILS_ENV: production
 
-- name: set display name format
+- name: set version control systems
   become: yes
   command:
-    bundle exec rails r "Setting['user_format']=:lastname_firstname"
+    bundle exec rails r "Setting['enabled_scm']=['Subversion','Git']"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
   when:
     result_database_yml is changed
 
-- name: set authentication required
+- name: set Redmine settings
   become: yes
   command:
-    bundle exec rails r "Setting['login_required']='1'"
+    bundle exec rails r "Setting['{{ item.key }}']={{ item.value }}"
     chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: disable unsubscription
-  become: yes
-  command:
-    bundle exec rails r "Setting['unsubscribe']='0'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set notification conditions
-  become: yes
-  command:
-    bundle exec rails r "Setting['notified_events']='---\n- issue_added\n- issue_updated\n- news_added\n- news_comment_added'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set repository encodings
-  become: yes
-  command:
-    bundle exec rails r "Setting['repositories_encodings']='UTF-8,CP932,EUC-JP'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set commit reference keywords
-  become: yes
-  command:
-    bundle exec rails r "Setting['commit_ref_keywords']='*'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: enable thumbnails
-  become: yes
-  command:
-    bundle exec rails r "Setting['thumbnails_enabled']='1'"
-    chdir={{ redmine_dir }}
+  with_items: "{{ redmine_settings }}"
   environment:
     RAILS_ENV: production
   when:

@@ -22,6 +22,27 @@ redmine_host_name: example.com
 # Redmine relative URL root
 redmine_url_root: /redmine
 
+# Redmine settings
+redmine_settings:
+  - key: user_format
+    value: ":lastname_firstname"
+  - key: login_required
+    value: "'1'"
+  - key: unsubscribe
+    value: "'0'"
+  - key: default_projects_public
+    value: "'0'"
+  - key: default_projects_modules
+    value: "['issue_tracking','news','wiki','repository','gantt']"
+  - key: notified_events
+    value: "['issue_added','issue_updated','news_added','news_comment_added']"
+  - key: repositories_encodings
+    value: "'UTF-8,CP932,EUC-JP'"
+  - key: commit_ref_keywords
+    value: "'*'"
+  - key: thumbnails_enabled
+    value: "'1'"
+
 # PostgreSQL configuration file
 pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
 
