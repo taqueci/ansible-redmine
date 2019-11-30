@@ -1,0 +1,24 @@
+- name: set cron configuration for backup
+  become: yes
+  template:
+    src: backup.cron.j2
+    dest: /etc/cron.d/backup
+    force: no
+
+- name: make directory for backup scripts
+  become: yes
+  file:
+    path: "{{ backup_script_path }}"
+    state: directory
+    mode: '0755'
+
+- name: copy backup scripts
+  become: yes
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ backup_script_path }}/{{ item }}"
+    mode: '0755'
+  with_items:
+    - redmine.sh
+    - svn.sh
+    - git.sh

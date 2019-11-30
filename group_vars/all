@@ -53,3 +53,7 @@ scm_git_repos_path: /var/lib/git/repos
 # SCM relative URL root
 scm_svn_url_root: /svn
 scm_git_url_root: /git
+
+# Backup settings
+backup_dir: /var/backups
+backup_script_path: /usr/local/libexec/backup

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+dir=$(date "+$1")
+repos="{{ scm_git_repos_path }}"
+
+test -d $dir || mkdir -p $dir || exit 1
+
+for r in $repos/*; do
+    name=$(basename $r)
+    test -f $r/HEAD && tar czf $dir/$name.tar.gz -C $(dirname $r) $name
+done

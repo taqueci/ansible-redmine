@@ -6,6 +6,7 @@
     - redmine
     - scm
     - apache
+    - backup
   post_tasks:
     - name: completed
       debug:
@@ -21,6 +22,7 @@
     - redmine
     - scm
     - apache
+    - backup
   post_tasks:
     - name: completed
       debug:
