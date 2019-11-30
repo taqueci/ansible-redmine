@@ -1,0 +1,13 @@
+# Host variables
+
+# Database password
+db_passwd_redmine: we_will_rock_you
+
+# Language
+redmine_lang: en
+
+# 'http' or 'https'
+redmine_protocol: https
+
+# HOST or HOST:PORT
+redmine_host_name: example.com

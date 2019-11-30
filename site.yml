@@ -1,13 +1,26 @@
-- hosts: redmine_servers
-
+- hosts: centos
   roles:
-    - system
+    - system_centos
+    - pg_init
     - pg
-    - ruby
     - redmine
-    - apache
     - scm
+    - apache
+  post_tasks:
+    - name: completed
+      debug:
+        msg:
+        - The installation has been completed.
+        - "http://{{ ansible_default_ipv4.address }}{{ redmine_url_root }}"
+        - "{{ redmine_protocol }}://{{ redmine_host_name }}{{ redmine_url_root }}"
 
+- hosts: ubuntu
+  roles:
+    - system_ubuntu
+    - pg
+    - redmine
+    - scm
+    - apache
   post_tasks:
     - name: completed
       debug:

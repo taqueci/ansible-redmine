@@ -1,7 +1,7 @@
 - name: load default data
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rake redmine:load_default_data
+    bundle exec rake redmine:load_default_data
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -12,88 +12,35 @@
 - name: set protocol
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['protocol']='{{ redmine_protocol }}'"
+    bundle exec rails r "Setting['protocol']='{{ redmine_protocol }}'"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
-  when:
-    result_database_yml is changed
 
 - name: set host name
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['host_name']='{{ redmine_host_name }}{{ redmine_url_root }}'"
+    bundle exec rails r "Setting['host_name']='{{ redmine_host_name }}{{ redmine_url_root }}'"
+    chdir={{ redmine_dir }}
+  environment:
+    RAILS_ENV: production
+
+- name: set version control systems
+  become: yes
+  command:
+    bundle exec rails r "Setting['enabled_scm']=['Subversion','Git']"
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
   when:
     result_database_yml is changed
 
-- name: set display name format
+- name: set Redmine settings
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['user_format']=:lastname_firstname"
+    bundle exec rails r "Setting['{{ item.key }}']={{ item.value }}"
     chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set authentication required
-  become: yes
-  command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['login_required']='1'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: disable unsubscription
-  become: yes
-  command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['unsubscribe']='0'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set notification conditions
-  become: yes
-  command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['notified_events']='---\n- issue_added\n- issue_updated\n- news_added\n- news_comment_added'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set repository encodings
-  become: yes
-  command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['repositories_encodings']='UTF-8,CP932,EUC-JP'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: set commit reference keywords
-  become: yes
-  command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['commit_ref_keywords']='*'"
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
-- name: enable thumbnails
-  become: yes
-  command:
-    scl enable rh-ruby26 -- bundle exec rails r "Setting['thumbnails_enabled']='1'"
-    chdir={{ redmine_dir }}
+  with_items: "{{ redmine_settings }}"
   environment:
     RAILS_ENV: production
   when:

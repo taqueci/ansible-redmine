@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 repos=$1
 proj=$2
@@ -10,3 +10,23 @@ cat <<'EOF' > $hook
 exec git update-server-info
 EOF
 chmod 755 $hook
+
+tmpdir=$(mktemp -d)
+
+# Initializes repository
+git clone $repos $tmpdir
+cat <<'EOF' > $tmpdir/.gitignore
+*~
+*.bak
+*.ori
+*.orig
+*.tmp
+EOF
+(cd $tmpdir &&
+    git config user.name "Admin" &&
+    git config user.email "admin@example.com" &&
+    git config push.default simple &&
+    git add .gitignore &&
+    git commit -m 'Initial commit' &&
+    git push)
+rm -rf $tmpdir

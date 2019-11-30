@@ -31,7 +31,7 @@
 - name: install Gems packages
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle install --path vendor/bundle
+    bundle install --path vendor/bundle
     chdir={{ redmine_dir }}
   when:
     result_test_gemfile.rc == 1
@@ -39,7 +39,7 @@
 - name: update Gems packages
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle update
+    bundle update
     chdir={{ redmine_dir }}
   when:
     result_test_gemfile.rc == 0
@@ -47,7 +47,7 @@
 - name: create secret token
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rake generate_secret_token
+    bundle exec rake generate_secret_token
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
@@ -55,17 +55,18 @@
 - name: migrate database
   become: yes
   command:
-    scl enable rh-ruby26 -- bundle exec rake db:migrate
+    bundle exec rake db:migrate
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
 
+- name: set log rotation
+  become: yes
+  template:
+    src: redmine.logrotate.j2
+    dest: /etc/logrotate.d/redmine
+    force: no
+
 - include: settings.yml
 - include: themes.yml
 - include: plugins.yml
-
-- name: restart Redmine
-  become: yes
-  service:
-    name: httpd
-    state: restarted

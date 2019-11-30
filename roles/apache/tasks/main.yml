@@ -6,29 +6,33 @@
     group: "{{ redmine_dir_group }}"
     recurse: yes
 
-- name: check Passenger
-  command:
-    test -f /opt/rh/rh-ruby26/root/usr/local/bin/passenger-install-apache2-module
-  register:
-    result
-  failed_when: result.rc not in [0, 1]
-  changed_when: false
-
 - name: install Passenger
   become: yes
+  gem:
+    name: passenger
+    user_install: no
+
+- name: get Passenger install directory
   command:
-    scl enable rh-ruby26 -- gem install passenger
-  when: result.rc == 1
+    passenger-config --root
+  register:
+    passenger_root
+
+- name: check Passenger module
+  stat:
+    path: "{{ passenger_root.stdout }}/buildout/apache2/mod_passenger.so"
+  register:
+    mod_passenger
 
 - name: install Passenger Apache module
   become: yes
   command:
-    scl enable rh-ruby26 -- passenger-install-apache2-module --auto
-  when: result.rc == 1
+    passenger-install-apache2-module --auto
+  when: not mod_passenger.stat.exists
 
 - name: get snippet for Passenger Apache module
   command:
-    scl enable rh-ruby26 -- passenger-install-apache2-module --snippet
+    passenger-install-apache2-module --snippet
   register:
     passenger_snippet_vars
   changed_when: false
@@ -36,12 +40,18 @@
 - name: create Apache configuration for Redmine
   become: yes
   template:
-    src=redmine.conf
-    dest=/etc/httpd/conf.d/redmine.conf
+    src: redmine.conf
+    dest: "{{ apache_conf_dir }}/redmine.conf"
+
+- name: enable Apache configuration for Redmine
+  become: yes
+  command:
+    a2enconf redmine
+  when: apache_service == 'apache2'
 
 - name: restart Apache
   become: yes
   service:
-    name=httpd
-    state=restarted
-    enabled=yes
+    name: "{{ apache_service }}"
+    state: restarted
+    enabled: yes

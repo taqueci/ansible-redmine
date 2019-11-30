@@ -1,6 +1,8 @@
 PerlLoadModule Apache::Authn::Redmine
 PerlLoadModule Authen::Simple::LDAP
 
+# RequestHeader edit Destination ^https: http: early
+
 <Location {{ scm_svn_url_root }}>
   PerlAccessHandler Apache::Authn::Redmine::access_handler
   PerlAuthenHandler Apache::Authn::Redmine::authen_handler
@@ -17,19 +19,19 @@ PerlLoadModule Authen::Simple::LDAP
   RedmineDbUser "redmine"
   RedmineDbPass "{{ db_passwd_redmine }}"
 
-  RedmineCacheCredsMax 100
+  # RedmineCacheCredsMax 100
 
   Require valid-user
 </Location>
 
-ScriptAlias {{ scm_git_url_root }} /usr/libexec/git-core/git-http-backend
+ScriptAlias {{ scm_git_url_root }} {{ scm_git_http_backend }}
 
 <Location {{ scm_git_url_root }}>
   SetEnv GIT_PROJECT_ROOT {{ scm_git_repos_path }}
   SetEnv GIT_HTTP_EXPORT_ALL
   SetEnv REMOTE_USER $REDIRECT_REMOTE_USER
 
-  # PerlAccessHandler Apache::Authn::Redmine::access_handler
+  PerlAccessHandler Apache::Authn::Redmine::access_handler
   PerlAuthenHandler Apache::Authn::Redmine::authen_handler
 
   AuthType Basic
