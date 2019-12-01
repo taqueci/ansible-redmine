@@ -6,8 +6,8 @@ url=$3
 
 # Properties for TortoiseSVN
 bt_url="$url/issues/%BUGID%"
-bt_pat='#\d+
-#\d+'
+bt_pat_id='#[1-9][0-9]*
+[1-9][0-9]*'
 
 tmpdir=$(mktemp -d)
 
@@ -15,7 +15,7 @@ tmpdir=$(mktemp -d)
 svn co file://$repos $tmpdir
 svn mkdir $tmpdir/trunk $tmpdir/branches $tmpdir/tags
 svn propset bugtraq:url "$bt_url" $tmpdir/trunk
-svn propset bugtraq:logregex "$bt_pat" $tmpdir/trunk
+svn propset bugtraq:logregex "$bt_pat_id" $tmpdir/trunk
 svn commit --username=admin -m 'Initial commit' $tmpdir
 rm -rf $tmpdir
 
