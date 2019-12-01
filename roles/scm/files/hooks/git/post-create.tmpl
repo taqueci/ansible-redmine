@@ -2,6 +2,7 @@
 
 repos=$1
 proj=$2
+url=$3
 
 # Creates hook script for HTTP access
 hook=$repos/hooks/post-update
@@ -11,10 +12,19 @@ exec git update-server-info
 EOF
 chmod 755 $hook
 
+user="admin"
+mail="admin@example.com"
+
+# Properties for TortoiseGit
+bt_url="$url/issues/%BUGID%"
+bt_pat='#[1-9][0-9]*'
+bt_id='[1-9][0-9]*'
+
 tmpdir=$(mktemp -d)
 
-# Initializes repository
 git clone $repos $tmpdir
+
+# Untracked file list
 cat <<'EOF' > $tmpdir/.gitignore
 *~
 *.bak
@@ -22,11 +32,63 @@ cat <<'EOF' > $tmpdir/.gitignore
 *.orig
 *.tmp
 EOF
+
+# Local repository initialization script
+init=$tmpdir/.git-config-init.sh
+cat <<'EOF' | \
+    sed -e "s|@BT_URL@|$bt_url|" \
+        -e "s|@BT_PAT@|$bt_pat|" \
+        -e "s|@BT_ID@|$bt_id|" > $init
+#!/bin/sh
+
+BT_URL="@BT_URL@"
+BT_PAT="@BT_PAT@"
+BT_ID="@BT_ID@"
+
+echo "Setting Git configurations..."
+git config --global core.autocrlf false
+git config --global core.ignorecase false
+git config core.quotepath false
+git config merge.ff false
+git config pull.rebase true
+git config push.default simple
+git config bugtraq.url "$BT_URL"
+git config bugtraq.logregex "$BT_PAT
+$BT_ID"
+
+cat <<'EOS' | sed "s|@PATTERN@|$BT_PAT|" > .git/hooks/commit-msg
+#!/bin/sh
+
+PATTERN="@PATTERN@"
+
+egrep "$PATTERN" "$1" > /dev/null || {
+    echo "No issue number" >&2
+    exit 1
+}
+
+exit 0
+EOS
+chmod u+x .git/hooks/commit-msg
+
+name=`git config user.name`
+echo -n "Enter full name (e.g. Steven Tyler) [$name]: "
+read name
+test -z "$name" || git config --global user.name "$name"
+
+email=`git config user.email`
+echo -n "Enter e-mail address [$email]: "
+read email
+test -z "$email" || git config --global user.email "$email"
+
+echo "Completed!"
+EOF
+chmod 755 $init
+
 (cd $tmpdir &&
-    git config user.name "Admin" &&
-    git config user.email "admin@example.com" &&
+    git config user.name "$user" &&
+    git config user.email "$mail" &&
     git config push.default simple &&
-    git add .gitignore &&
+    git add .gitignore .git-config-init.sh &&
     git commit -m 'Initial commit' &&
     git push)
 rm -rf $tmpdir
