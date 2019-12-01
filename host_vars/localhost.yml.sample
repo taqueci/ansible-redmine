@@ -11,3 +11,6 @@ redmine_protocol: https
 
 # HOST or HOST:PORT
 redmine_host_name: example.com
+
+# Notification e-mail address
+redmine_mail_from: 'redmine@example.com'

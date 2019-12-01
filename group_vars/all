@@ -22,6 +22,9 @@ redmine_host_name: example.com
 # Redmine relative URL root
 redmine_url_root: /redmine
 
+# Notification e-mail address
+redmine_mail_from: 'redmine@example.com'
+
 # Redmine settings
 redmine_settings:
   - key: user_format
