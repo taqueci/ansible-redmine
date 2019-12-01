@@ -7,5 +7,10 @@ test -d $dir || mkdir -p $dir || exit 1
 
 for r in $repos/*; do
     name=$(basename $r)
-    test -f $r/HEAD && tar czf $dir/$name.tar.gz -C $(dirname $r) $name
+
+    if [ -d $dir/$name ]; then
+        (cd $dir/$name && git fetch --all -q)
+    else
+        test -f $r/HEAD && git clone --mirror -q $r $dir/$name
+    fi
 done
