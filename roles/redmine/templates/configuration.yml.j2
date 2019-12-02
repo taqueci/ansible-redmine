@@ -1,9 +1,4 @@
 production:
-  email_delivery:
-    delivery_method: :smtp
-    smtp_settings:
-      address: "localhost"
-      port: 25
-      domain: "{{ ansible_fqdn }}"
+{{ redmine_email_delivery | to_nice_yaml(indent=2) | indent(2, true) }}
 
   rmagick_font_path: {{ redmine_font_path }}
