@@ -53,9 +53,6 @@ redmine_settings:
   - key: thumbnails_enabled
     value: "'1'"
 
-# PostgreSQL configuration file
-pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
-
 # SCM
 scm_svn_repos_path: /var/lib/svn/repos
 scm_git_repos_path: /var/lib/git/repos

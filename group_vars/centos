@@ -11,6 +11,3 @@ scm_perl_inc: /usr/lib64/perl5/vendor_perl
 
 # Script for Git smart HTTP
 scm_git_http_backend: /usr/libexec/git-core/git-http-backend
-
-# PostgreSQL configuration file
-pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
