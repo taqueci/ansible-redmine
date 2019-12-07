@@ -1,0 +1,11 @@
+#!/bin/bash
+
+dir=$(date "+$1")
+repos="{{ scm_svn_repos_path }}"
+
+test -d $dir || mkdir -p $dir || exit 1
+
+for r in $repos/*; do
+    name=$(basename $r)
+    test -f $r/format && svnadmin dump -q $r | gzip -c > $dir/$name.gz
+done

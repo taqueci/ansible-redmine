@@ -1,24 +1,24 @@
 - name: checkout Redmine source files
   become: yes
   subversion:
-    repo={{ redmine_svn_url }}
-    dest={{ redmine_dir }}
+    repo: "{{ redmine_svn_url }}"
+    dest: "{{ redmine_dir }}"
 
 - name: create database.yml
   become: yes
   template:
-    src=database.yml
-    dest={{ redmine_dir }}/config/database.yml
-    force=no
+    src: database.yml.j2
+    dest: "{{ redmine_dir }}/config/database.yml"
+    force: no
   register:
     result_database_yml
 
 - name: create configuration.yml
   become: yes
   template:
-    src=configuration.yml
-    dest={{ redmine_dir }}/config/configuration.yml
-    force=no
+    src: configuration.yml.j2
+    dest: "{{ redmine_dir }}/config/configuration.yml"
+    force: no
 
 - name: check Gemfile.lock
   command:

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+dir=$(date "+$1")
+repos="{{ scm_git_repos_path }}"
+
+test -d $dir || mkdir -p $dir || exit 1
+
+for r in $repos/*; do
+    name=$(basename $r)
+
+    if [ -d $dir/$name ]; then
+        (cd $dir/$name && git fetch --all -q)
+    else
+        test -f $r/HEAD && git clone --mirror -q $r $dir/$name
+    fi
+done

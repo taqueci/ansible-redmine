@@ -11,3 +11,13 @@ redmine_protocol: https
 
 # HOST or HOST:PORT
 redmine_host_name: example.com
+
+# Notification e-mail address
+redmine_mail_from: 'redmine@example.com'
+
+# E-mail configuration
+redmine_email_delivery:
+  delivery_method: :smtp
+  smtp_settings:
+    address: 'localhost'
+    port: 25

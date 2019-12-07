@@ -25,6 +25,16 @@
   environment:
     RAILS_ENV: production
 
+- name: set notification e-mail address
+  become: yes
+  command:
+    bundle exec rails r "Setting['mail_from']='{{ redmine_mail_from }}'"
+    chdir={{ redmine_dir }}
+  environment:
+    RAILS_ENV: production
+  when:
+    result_database_yml is changed
+
 - name: set version control systems
   become: yes
   command:

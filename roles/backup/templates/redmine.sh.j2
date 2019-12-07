@@ -1,0 +1,7 @@
+#!/bin/bash
+
+dir=$(date "+$1")
+
+test -d $dir || mkdir -p $dir || exit 1
+
+sudo -Hi -u postgres pg_dump redmine | gzip -c > $dir/redmine.dump.gz

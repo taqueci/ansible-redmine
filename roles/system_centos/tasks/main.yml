@@ -26,12 +26,12 @@
 
 - name: allow HTTP
   become: yes
-  command: firewall-cmd --zone=public --add-service=http --permanent
-  when: firewall_state.rc == 0
-
-- name: relaod firewalld policy
-  become: yes
-  command: firewall-cmd --reload
+  firewalld:
+    zone: public
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
   when: firewall_state.rc == 0
 
 - name: enable extra yum repositories

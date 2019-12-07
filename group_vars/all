@@ -22,6 +22,16 @@ redmine_host_name: example.com
 # Redmine relative URL root
 redmine_url_root: /redmine
 
+# Notification e-mail address
+redmine_mail_from: 'redmine@example.com'
+
+# E-mail configuration
+redmine_email_delivery:
+  delivery_method: :smtp
+  smtp_settings:
+    address: 'localhost'
+    port: 25
+
 # Redmine settings
 redmine_settings:
   - key: user_format
@@ -43,9 +53,6 @@ redmine_settings:
   - key: thumbnails_enabled
     value: "'1'"
 
-# PostgreSQL configuration file
-pg_hba_conf_path: /var/lib/pgsql/data/pg_hba.conf
-
 # SCM
 scm_svn_repos_path: /var/lib/svn/repos
 scm_git_repos_path: /var/lib/git/repos
@@ -53,3 +60,7 @@ scm_git_repos_path: /var/lib/git/repos
 # SCM relative URL root
 scm_svn_url_root: /svn
 scm_git_url_root: /git
+
+# Backup settings
+backup_dir: /var/backups
+backup_script_path: /usr/local/libexec/backup
