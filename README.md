@@ -1,10 +1,10 @@
 # Ansible playbook for Redmine
 
-Ansible playbook for installing Redmine with plugins on CentOS/Ubuntu.
+Ansible playbook for installing Redmine with plugins on CentOS/Ubuntu/Debian.
 
 ## Requirements
 
-CentOS 7.6 or Ubuntu 18.04
+CentOS 7.6, Ubuntu 18.04 or Debian 10
 
 ## System
 
@@ -32,6 +32,17 @@ and edit the file as many as target hosts
 * Run commend:
 ```
 ansible-playbook -i hosts site.yml
+```
+
+## Notes
+
+Enable configuration `allow_world_readable_tmpfiles`
+if the playbook is executed by unprivileged user.
+
+ansible.cfg:
+```
+[defaults]
+allow_world_readable_tmpfiles = True
 ```
 
 ## License
