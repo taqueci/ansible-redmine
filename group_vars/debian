@@ -1,0 +1,13 @@
+# Redmine directory owner/group
+redmine_dir_owner: www-data
+redmine_dir_group: www-data
+
+# Apache
+apache_service: apache2
+apache_conf_dir: /etc/apache2/conf-available
+
+# Directory path for Redmine.pm
+scm_perl_inc: /usr/local/lib/site_perl
+
+# Script for Git smart HTTP
+scm_git_http_backend: /usr/lib/git-core/git-http-backend

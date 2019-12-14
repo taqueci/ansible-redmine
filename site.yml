@@ -30,3 +30,19 @@
         - The installation has been completed.
         - "http://{{ ansible_default_ipv4.address }}{{ redmine_url_root }}"
         - "{{ redmine_protocol }}://{{ redmine_host_name }}{{ redmine_url_root }}"
+
+- hosts: debian
+  roles:
+    - system_debian
+    - pg
+    - redmine
+    - scm
+    - apache
+    - backup
+  post_tasks:
+    - name: completed
+      debug:
+        msg:
+        - The installation has been completed.
+        - "http://{{ ansible_default_ipv4.address }}{{ redmine_url_root }}"
+        - "{{ redmine_protocol }}://{{ redmine_host_name }}{{ redmine_url_root }}"
