@@ -1,6 +1,7 @@
 [redmine_servers:children]
 centos
 ubuntu
+debian
 
 [centos]
 localhost ansible_connection=local
@@ -8,3 +9,6 @@ localhost ansible_connection=local
 
 [ubuntu]
 10.0.0.2 ansible_ssh_user=ubuntu
+
+[debian]
+10.0.0.3 ansible_ssh_user=debian
