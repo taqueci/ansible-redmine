@@ -67,6 +67,6 @@
     dest: /etc/logrotate.d/redmine
     force: no
 
-- include: settings.yml
-- include: themes.yml
 - include: plugins.yml
+- include: themes.yml
+- include: settings.yml
