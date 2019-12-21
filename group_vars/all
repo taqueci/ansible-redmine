@@ -2,7 +2,7 @@
 db_passwd_redmine: Must_be_changed!
 
 # Redmine source files
-redmine_svn_url: http://svn.redmine.org/redmine/tags/4.0.5
+redmine_svn_url: http://svn.redmine.org/redmine/tags/4.1.0
 
 # Redmine directory
 redmine_dir: /opt/redmine

@@ -24,7 +24,7 @@
   git:
     repo: 'https://github.com/taqueci/redmine_local_avatars.git'
     dest: "{{ redmine_dir }}/plugins/redmine_local_avatars"
-    version: 1.0.5.1.0
+    version: 1.0.5.2.0
 
 - name: install Redmine XLSX Format Issue Exporter plugin
   become: yes
