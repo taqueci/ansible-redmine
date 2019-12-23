@@ -2,6 +2,7 @@
   become: yes
   file:
     path: "{{ redmine_dir }}"
+    state: directory
     owner: "{{ redmine_dir_owner }}"
     group: "{{ redmine_dir_group }}"
     recurse: yes
