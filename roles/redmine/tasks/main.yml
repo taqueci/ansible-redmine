@@ -52,14 +52,6 @@
   environment:
     RAILS_ENV: production
 
-- name: migrate database
-  become: yes
-  command:
-    bundle exec rake db:migrate
-    chdir={{ redmine_dir }}
-  environment:
-    RAILS_ENV: production
-
 - name: set log rotation
   become: yes
   template:
@@ -70,3 +62,11 @@
 - include: plugins.yml
 - include: themes.yml
 - include: settings.yml
+
+- name: migrate database
+  become: yes
+  command:
+    bundle exec rake db:migrate
+    chdir={{ redmine_dir }}
+  environment:
+    RAILS_ENV: production
