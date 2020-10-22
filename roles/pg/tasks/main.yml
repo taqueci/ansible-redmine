@@ -9,6 +9,8 @@
   become: yes
   become_user: postgres
   become_method: sudo
+  vars:
+    ansible_ssh_pipelining: true
   postgresql_user:
     name: redmine
     password: "{{ db_passwd_redmine }}"
@@ -17,6 +19,8 @@
   become: yes
   become_user: postgres
   become_method: sudo
+  vars:
+    ansible_ssh_pipelining: true
   postgresql_db:
     name: redmine
     encoding: UTF-8

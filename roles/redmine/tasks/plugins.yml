@@ -3,7 +3,7 @@
   git:
     repo: 'https://github.com/taqueci/redmine_wysiwyg_editor.git'
     dest: "{{ redmine_dir }}/plugins/redmine_wysiwyg_editor"
-    version: 0.15.0
+    version: 0.16.1
 
 - name: install Redmine Mail From plugin
   become: yes
@@ -38,7 +38,7 @@
   git:
     repo: 'https://github.com/onozaty/redmine-view-customize.git'
     dest: "{{ redmine_dir }}/plugins/view_customize"
-    version: v2.5.0
+    version: v2.7.0
 
 - name: install Redmine scm-creator plugin
   become: yes
@@ -52,7 +52,7 @@
   git:
     repo: 'https://github.com/akiko-pusu/redmine_banner.git'
     dest: "{{ redmine_dir }}/plugins/redmine_banner"
-    version: 0.3.1
+    version: 0.3.4
 
 - name: install localizable plugin
   become: yes

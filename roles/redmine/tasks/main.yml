@@ -59,10 +59,6 @@
     dest: /etc/logrotate.d/redmine
     force: no
 
-- include: plugins.yml
-- include: themes.yml
-- include: settings.yml
-
 - name: migrate database
   become: yes
   command:
@@ -70,3 +66,7 @@
     chdir={{ redmine_dir }}
   environment:
     RAILS_ENV: production
+
+- include: settings.yml
+- include: plugins.yml
+- include: themes.yml
